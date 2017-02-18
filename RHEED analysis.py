@@ -1,5 +1,5 @@
 from astropy.io import fits
-from tkFileDialog import askopenfilename
+from TkFileDialog import askopenfilename
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
@@ -29,8 +29,8 @@ print (np.size(image_data))
 def onclick(event):
     #global ix, iy
     ix, iy = event.xdata, event.ydata
-    print 'x = %d, y = %d '%(
-        ix, iy)
+    print ('x = %d, y = %d '%(
+        ix, iy))
 
     coords.append((ix, iy))
     #print(image_data[(coords[0][0]), (coords[0][1])])
@@ -38,7 +38,7 @@ def onclick(event):
 
         inc=10000
         d = (np.sqrt((np.abs(coords[0][0]-coords[1][0])**2)+(np.abs(coords[0][1]-coords[1][1])**2)))
-        print d
+        print (d)
         # to take euclidian change second entry to coords[1][1] not coords[0][1]
         y, x = np.linspace((coords[0][1]), (coords[0][1]), inc), np.linspace((coords[0][0]), (coords[1][0]), inc)
 
@@ -106,7 +106,7 @@ def onclick(event):
 
         for k in range(search3,Umaxindex-inc/2):
             if Ures[k]==np.min(Ures[search3:Umaxindex-inc/2]):
-                print k
+                print (k)
                 break
 
         for l in range(Umaxindex-inc/2,search4):
