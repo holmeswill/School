@@ -17,6 +17,7 @@ hdu_list = fits.open(filename)
 image_data = hdu_list[0].data
 ax1 = fig1.add_subplot(211)
 plt.imshow(image_data, cmap='gray', norm=LogNorm(), aspect='auto')
+plt.suptitle(str(filename[len(filename)-7:len(filename)-3]))
 
 
 
@@ -118,7 +119,8 @@ def onclick(event):
         
         Lpeakindex=(j+i)/2
         Upeakindex=(l+k)/2+inc/2
-        distance=line[Lpeakindex]-line[Upeakindex]
+        distance=np.abs(line[Lpeakindex]-line[Upeakindex])
+        maxdistance=line[Lmaxindex]-line[Umaxindex]
         ax2 = fig1.add_subplot(212)
         plt.plot(line,zi)
         plt.plot(line[i], zi[i], 'bo')
@@ -136,7 +138,7 @@ def onclick(event):
         plt.axvline(line[search1], color='black', linestyle='--')
         plt.axvline(line[search2], color='black', linestyle='--')
         
-        figtext(0, 0, '\nLeft peak ' + str(line[Lpeakindex])+ '\nright peak '+str(line[Upeakindex])+'\nDistance = '+str(distance))
+        figtext(0, 0, '\nLeft peak ' + str(line[Lpeakindex])+"         Left Max "+str(line[Lmaxindex])+ '\nright peak '+str(line[Upeakindex])+"         Right Max"+str(line[Umaxindex])+'\nDistance = '+str(distance)+'         Max Distance '+str(maxdistance))
 
 
 cid = fig1.canvas.mpl_connect('button_press_event', onclick)
