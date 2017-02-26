@@ -7,10 +7,12 @@ import scipy.ndimage
 from scipy import signal
 from pylab import figtext
 from matplotlib.colors import LogNorm
+#import pyperclip
+
 
 #first we open file
 plt.ion()
-root=tk.Tk()
+#root=tk.Tk()
 fig1=plt.figure(1,figsize=(10,10))
 filename = tk.filedialog.askopenfilename(initialdir='/home/will/Documents/School/Data/A383/RHEED_A383/Growth')
 hdu_list = fits.open(filename)
@@ -61,10 +63,10 @@ def onclick(event):
         
         #Here we find the upper and lower max
         
-        search1 = 0
-        search2 = 5000
-        search3 = 0
-        search4 = np.floor(inc/2)
+        search1 = 50
+        search2 = 3250
+        search3 = 1750
+        search4 = np.floor(inc/2)-250
         
         Lmax=np.max(zi[search1:search2])
         Umax=np.max(zi[np.floor(inc//2)+search3:np.floor(inc/2)+search4])
@@ -100,20 +102,20 @@ def onclick(event):
         
 
         for i in range(int(search1),int(Lmaxindex)):
-            if Lres[i]-HLmax==np.min(np.abs(Lres[search1:Lmaxindex]-HLmax)):
+            if np.abs(Lres[i]-HLmax)==np.min(np.abs(Lres[search1:Lmaxindex]-HLmax)):
                 break
         #print ('i '+str(i))
         for j in range(int(Lmaxindex), int(search2)):
-            if Lres[j]-HLmax==np.min(np.abs(Lres[Lmaxindex:search2]-HLmax)):
+            if np.abs(Lres[j]-HLmax)==np.min(np.abs(Lres[Lmaxindex:search2]-HLmax)):
                 break
         print ('j '+str(j))
         for k in range(int(search3),int(Umaxindex-inc/2)):
-            if Ures[k]-HUmax==np.min(np.abs(Ures[search3:Umaxindex-inc/2]-HUmax)):
+            if np.abs(Ures[k]-HUmax)==np.min(np.abs(Ures[search3:Umaxindex-inc/2]-HUmax)):
                 print (k)
                 break
         #print ('k '+str(k))
         for l in range(int(Umaxindex-np.floor(inc/2)),int(search4)):
-            if Ures[l]-HUmax==np.min(np.abs(Ures[Umaxindex-inc/2:search4]-HUmax)):
+            if np.abs(Ures[l]-HUmax)==np.min(np.abs(Ures[Umaxindex-inc/2:search4]-HUmax)):
                 break
         print ('l '+str(l))
         
@@ -140,10 +142,10 @@ def onclick(event):
         
         figtext(0, 0, '\nLeft peak ' + str(line[Lpeakindex])+"         Left Max "+str(line[Lmaxindex])+ '\nright peak '+str(line[Upeakindex])+"         Right Max"+str(line[Umaxindex])+'\nDistance = '+str(distance)+'         Max Distance '+str(maxdistance))
 
-
+       # pyperclip.copy(str(distance))
 cid = fig1.canvas.mpl_connect('button_press_event', onclick)
 plt.show(block=True)
-root.destroy()
+#root.destroy()
 
 
 print('works')
